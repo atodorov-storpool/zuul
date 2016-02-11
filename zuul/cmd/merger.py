@@ -103,7 +103,7 @@ def main():
     if server.args.nodaemon:
         server.main()
     else:
-        with daemon.DaemonContext(pidfile=pid):
+        with daemon.DaemonContext(pidfile=pid,detach_process=True):
             server.main()
 
 
