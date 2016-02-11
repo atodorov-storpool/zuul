@@ -1258,6 +1258,11 @@ class EventFilter(BaseFilter):
             if not matches_approval:
                 return False
 
+        # change is last in topic and have neededBy?
+        if self.last_in_tree and change.needed_by_changes:
+            # A change with child can not match
+            return False
+
         # required approvals are ANDed (reject approvals are ORed)
         if not self.matchesApprovals(change):
             return False
@@ -1276,13 +1281,14 @@ class EventFilter(BaseFilter):
 class ChangeishFilter(BaseFilter):
     def __init__(self, open=None, current_patchset=None,
                  statuses=[], required_approvals=[],
-                 reject_approvals=[]):
+                 reject_approvals=[], last_in_tree=None):
         super(ChangeishFilter, self).__init__(
             required_approvals=required_approvals,
             reject_approvals=reject_approvals)
         self.open = open
         self.current_patchset = current_patchset
         self.statuses = statuses
+        self.last_in_tree = last_in_tree
 
     def __repr__(self):
         ret = '<ChangeishFilter'
@@ -1299,6 +1305,8 @@ class ChangeishFilter(BaseFilter):
         if self.reject_approvals:
             ret += (' reject_approvals: %s' %
                     str(self.reject_approvals))
+        if self.last_in_tree is not None:
+            ret += ' last-in-tree: %s' % self.last_in_tree
         ret += '>'
 
         return ret

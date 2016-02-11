@@ -44,7 +44,8 @@ class LayoutSchema(object):
     require = {'approval': toList(approval),
                'open': bool,
                'current-patchset': bool,
-               'status': toList(str)}
+               'status': toList(str),
+               'last-in-tree': bool}
 
     reject = {'approval': toList(approval)}
 

@@ -475,7 +475,8 @@ class Scheduler(threading.Thread):
                     current_patchset=require.get('current-patchset'),
                     statuses=toList(require.get('status')),
                     required_approvals=toList(require.get('approval')),
-                    reject_approvals=toList(reject.get('approval'))
+                    reject_approvals=toList(reject.get('approval')),
+                    last_in_tree=require.get('last-in-tree'))
                 )
                 manager.changeish_filters.append(f)
 
