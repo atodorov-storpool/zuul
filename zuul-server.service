@@ -1,0 +1,17 @@
+[Unit]
+Description=zuul server service
+After=network.target
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+Type=forking
+WorkingDirectory=/var/lib/zuul
+PIDFile=/var/run/zuul/zuul-server.pid
+User=zuul
+ExecStart=/usr/bin/zuul-server
+ExecReload=/bin/kill -HUP $MAINPID
+StandardInput=null
+StandardOutput=inherit
+StandardError=inherit

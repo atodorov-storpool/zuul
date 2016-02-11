@@ -1,0 +1,20 @@
+[Unit]
+Description=zuul merger service
+After=network.target
+Requires=zuul-server.service
+After=zuul-server.service
+BindsTo=zuul-server.service
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+Type=forking
+WorkingDirectory=/var/lib/zuul
+PIDFile=/var/run/zuul/zuul-merger.pid
+User=zuul
+ExecStart=/usr/bin/zuul-merger
+ExecReload=/bin/kill -HUP $MAINPID
+StandardInput=null
+StandardOutput=inherit
+StandardError=inherit
